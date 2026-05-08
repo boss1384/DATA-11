@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG WADA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .mobile-frame {
+            width: 380px;
+            height: 720px;
+            background: #0a0a0a;
+            border-radius: 45px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            position: relative;
+            border: 12px solid #111;
+        }
+
+        .status-bar { padding: 12px 20px; color: white; font-size: 13px; display: flex; justify-content: space-between; }
+        .header { padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; color: white; }
+        .avatar { width: 45px; height: 45px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+
+        .balance-card {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            margin: 10px 20px;
+            padding: 22px;
+            border-radius: 22px;
+            color: white;
+        }
+        .balance-amount { font-size: 34px; font-weight: 700; margin-top: 8px; }
+
+        .services { padding: 20px; }
+        .section-title { color: #fff; margin-bottom: 18px; font-size: 18px; }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .service-item {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .service-item:active { transform: scale(0.88); }
+        .icon {
+            width: 58px;
+            height: 58px;
+            background: #1f2937;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 8px;
+        }
+
+        .page { 
+            display: none; 
+            padding: 20px; 
+            height: calc(100% - 180px); 
+            overflow-y: auto; 
+            background: #0a0a0a; 
+            color: white; 
+        }
+        .page.active { display: block; }
+
+        .back-btn {
+            background: #333;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <div>11:55 PM</div>
+            <div>4G 84%</div>
+        </div>
+
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="avatar">👤</div>
+                    <div>
+                        <p style="font-weight: 600;">Hi Professor!</p>
+                        <p style="color: #aaa; font-size: 14px;">What would you like to do?</p>
+                    </div>
+                </div>
+                <div style="font-size: 24px;">🛎️</div>
+            </div>
+
+            <div class="balance-card">
+                <div>
+                    <p>Available Balance <span class="eye" style="cursor:pointer;">👁️</span></p>
+                    <p id="balance" class="balance-amount">₦5,000.00</p>
+                </div>
+                <button onclick="alert('Fund Wallet Coming Soon!')">Fund Wallet</button>
+            </div>
+
+            <div class="services">
+                <h2 class="section-title">Services</h2>
+                <div class="services-grid">
+                    <div class="service-item" onclick="showPage('airtime')"><div class="icon">📞</div><p>Airtime</p></div>
+                    <div class="service-item" onclick="showPage('data')"><div class="icon">🌐</div><p>Data</p></div>
+                    <div class="service-item" onclick="showPage('rechargepins')"><div class="icon">🔢</div><p>Recharge Pins</p></div>
+                    <div class="service-item" onclick="showPage('datapin')"><div class="icon">🔄</div><p>Data Pin</p></div>
+                    <div class="service-item" onclick="showPage('electricity')"><div class="icon">⚡</div><p>Electricity</p></div>
+                    <div class="service-item" onclick="showPage('exampin')"><div class="icon">📦</div><p>Exam PIN</p></div>
+                    <div class="service-item" onclick="showPage('cabletv')"><div class="icon">📺</div><p>Cable TV</p></div>
+                    <div class="service-item" onclick="showPage('refer')"><div class="icon">👥</div><p>Refer</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Electricity -->
+        <div id="electricity" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Electricity Bill</h2>
+            <input type="text" placeholder="Enter Meter Number" style="width:100%; padding:15px; margin:15px 0; border-radius:12px;">
+            <button onclick="payService('Electricity')" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Pay Bill</button>
+        </div>
+
+        <!-- Exam PIN -->
+        <div id="exampin" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Exam PIN</h2>
+            <select style="width:100%; padding:15px; border-radius:12px; margin:15px 0;">
+                <option>WAEC</option>
+                <option>NECO</option>
+                <option>JAMB</option>
+            </select>
+            <button onclick="payService('Exam PIN')" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Generate PIN</button>
+        </div>
+
+        <!-- Cable TV -->
+        <div id="cabletv" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Cable TV</h2>
+            <select style="width:100%; padding:15px; border-radius:12px; margin:15px 0;">
+                <option>DSTV</option>
+                <option>GOtv</option>
+                <option>StarTimes</option>
+            </select>
+            <button onclick="payService('Cable TV')" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Pay Subscription</button>
+        </div>
+
+        <!-- Refer a Friend -->
+        <div id="refer" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Refer a Friend</h2>
+            <p style="margin:20px 0; line-height:1.6;">Invite friends and earn ₦500 when they fund their wallet.</p>
+            <div style="background:#1f2937; padding:20px; border-radius:12px; text-align:center;">
+                Your Code: <strong>AGWADA500</strong>
+            </div>
+            <button onclick="alert('Referral link copied!')" style="width:100%; margin-top:20px; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Share Link</button>
+        </div>
+
+        <!-- Airtime, Data, Recharge Pins, Data Pin Pages -->
+        <div id="airtime" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Airtime Recharge</h2>
+            <input type="text" id="phone" placeholder="Enter Phone Number" style="width:100%; padding:15px; margin:15px 0; border-radius:12px;">
+            <input type="number" id="airtime-amount" placeholder="Amount ₦" style="width:100%; padding:15px; margin:15px 0; border-radius:12px;">
+            <button onclick="buyAirtime()" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Buy Airtime</button>
+        </div>
+
+        <div id="data" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Data Bundles</h2>
+            <select id="network" onchange="loadPlans()" style="width:100%; padding:15px; margin:15px 0; border-radius:12px;">
+                <option value="MTN">MTN</option>
+                <option value="Airtel">Airtel</option>
+                <option value="Glo">Glo</option>
+            </select>
+            <div id="plans"></div>
+        </div>
+
+        <div id="rechargepins" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Recharge Pins</h2>
+            <select id="pin-network" style="width:100%; padding:15px; border-radius:12px; margin:15px 0;">
+                <option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option>
+            </select>
+            <button onclick="generateRechargePin()" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Generate Pin</button>
+        </div>
+
+        <div id="datapin" class="page">
+            <button class="back-btn" onclick="showPage('home')">← Back</button>
+            <h2>Data Pin</h2>
+            <select id="datapin-network" style="width:100%; padding:15px; border-radius:12px; margin:15px 0;">
+                <option>MTN</option><option>Airtel</option><option>Glo</option>
+            </select>
+            <button onclick="generateDataPin()" style="width:100%; padding:16px; background:#2563eb; border:none; border-radius:12px; color:white;">Generate Data Pin</button>
+        </div>
+    </div>
+
+    <script>
+        let balance = 5000;
+
+        function updateBalance() {
+            document.getElementById('balance').textContent = '₦' + balance.toLocaleString();
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function payService(service) {
+            if (balance >= 1000) {
+                balance -= 1000;
+                updateBalance();
+                alert(`✅ ${service} Successful!`);
+            } else {
+                alert("❌ Insufficient Balance!");
+            }
+        }
+
+        function generateRechargePin() {
+            if (balance >= 300) {
+                balance -= 300;
+                updateBalance();
+                alert("✅ Recharge Pin Generated!");
+            } else {
+                alert("Insufficient Balance!");
+            }
+        }
+
+        function generateDataPin() {
+            if (balance >= 500) {
+                balance -= 500;
+                updateBalance();
+                alert("✅ Data Pin Generated!");
+            } else {
+                alert("Insufficient Balance!");
+            }
+        }
+
+        function buyAirtime() {
+            const amount = parseFloat(document.getElementById('airtime-amount').value);
+            if (amount > 0 && balance >= amount) {
+                balance -= amount;
+                updateBalance();
+                alert(`✅ Airtime ₦${amount} purchased!`);
+            } else {
+                alert("Enter valid amount");
+            }
+        }
+
+        function loadPlans() {
+            const container = document.getElementById('plans');
+            container.innerHTML = `
+                <div class="plan" onclick="buyData(500,'1GB')">1GB - ₦500</div>
+                <div class="plan" onclick="buyData(1200,'2GB')">2GB - ₦1,200</div>
+                <div class="plan" onclick="buyData(2500,'5GB')">5GB - ₦2,500</div>
+            `;
+        }
+
+        function buyData(price, name) {
+            if (balance >= price) {
+                balance -= price;
+                updateBalance();
+                alert(`✅ ${name} Purchased!`);
+            } else {
+                alert("Insufficient Balance!");
+            }
+        }
+
+        // Eye Toggle
+        document.querySelector('.eye').addEventListener('click', () => {
+            const b = document.getElementById('balance');
+            b.style.opacity = (b.style.opacity === "0.2") ? "1" : "0.2";
+        });
+
+        updateBalance();
+        loadPlans();
+    </script>
+</body>
+</html>
